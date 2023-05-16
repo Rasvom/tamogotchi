@@ -3,15 +3,16 @@ const tamogotchi = {
   meal: 1,
   energy: 2,
   mood: 4,
-  depression: 5,
   getStatus: function () {
-    return this.meal || this.energy || this.mood || this.depression <= 0
-      ? `${this.name} умер :(`
-      : `Имя: ${this.name}, Еда: ${
-          this.meal < 3 ? "Я голоден" : "Я не голоден"
-        }, Энергия: ${
-          this.energy < 3 ? "Я хочу спать" : "Я не хочу спать"
-        }, Настроение: ${this.mood < 3 ? "Мне скучно" : "Мне весело"}`;
+    let eat = this.meal < 3 ? "Я голодный" : "Я не голодный";
+    let sleep = this.energy < 3 ? "Я хочу спать" : "Я не хочу спать";
+    let play = this.mood < 3 ? "Мне скучно" : "Мне весело";
+
+    if(this.meal <= 0 || this.energy <= 0 || this.mood <= 0){
+      return `${this.name} умер :(`
+    }else{
+    return `Имя: ${eat}, Энергия: ${sleep}, Настроение: ${play}`
+    }
   },
   setName: function (name) {
     this.name = name;
@@ -19,28 +20,19 @@ const tamogotchi = {
   eat: function () {
     if (this.meal < 5) {
       this.mood++;
-      this.emptiness();
-    }else{
-        this.mood--;
-        this.emptiness();
     }
+    this.mood--;
   },
   sleep: function () {
     if (this.energy < 5) {
       this.energy++;
-    }else{
-        this.meal--;
     }
-    
+    this.meal--;
   },
   play: function () {
     if (this.meal < 5) {
       this.mood++;
-    }else{
-        this.energy--;
     }
-  },
-  emptiness: function () {
-    this.depression--;
+    this.energy--;
   },
 };
